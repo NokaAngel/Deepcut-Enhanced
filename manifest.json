@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Deepcut Enhancer",
+  "version": "0.3.2",
+  "description": "Autobop, queue helpers, themes, notifications, AFK replies, and custom CSS for deepcut.live.",
+  "action": {
+    "default_title": "Deepcut Enhancer",
+    "default_icon": {
+      "128": "src/icon-128.png"
+    },
+    "default_popup": "src/popup.html"
+  },
+  "icons": {
+    "128": "src/icon-128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://deepcut.live/*",
+    "https://www.deepcut.live/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://deepcut.live/*",
+        "https://www.deepcut.live/*"
+      ],
+      "js": [
+        "src/deepcut-enhancer.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

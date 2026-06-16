@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepcut Enhancer</title>
+    <style>
+        :root {
+            --bg-color: #101418;
+            --panel-bg: #1c232a;
+            --text-color: #f7f8fb;
+            --accent: #d4af37; /* Gold accent */
+            --accent-hover: #b08d20;
+            --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(to bottom, #1f272e, #13181d);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #2a343d;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0abb6;
+            margin-top: 10px;
+        }
+
+        main {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid #2a343d;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 1px solid #2a343d;
+            padding-bottom: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.2s, transform 0.1s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            background: #090b10;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #a0abb6;
+            word-break: break-all;
+        }
+
+        .bookmarklet-container {
+            text-align: center;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px dashed var(--accent);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .live-data {
+            font-size: 0.9rem;
+            color: #34d399; /* Green for live data */
+            margin-top: 10px;
+            display: none; /* Will be populated and shown by JS */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Deepcut Enhancer</h1>
+    <div class="subtitle">The ultimate toolkit for deepcut.live DJs and listeners.</div>
+</header>
+
+<main>
+    <div class="card">
+        <h2>Features</h2>
+        <ul>
+            <li><strong>Auto-Voting:</strong> Automatically Awesome or Lame tracks. Smart delays to keep it looking natural.</li>
+            <li><strong>Auto-Queue:</strong> Automatically hop on the decks when a spot opens up, or via chat mention.</li>
+            <li><strong>Vote Tracking:</strong> See exactly who voted Awesome, Lame, or who hasn't voted yet.</li>
+            <li><strong>Custom Themes & UI:</strong> Apply clean, dark, or customized CSS to deepcut.live.</li>
+            <li><strong>AFK & Notifications:</strong> Set AFK messages and get desktop alerts when you're mentioned or when it's your turn to DJ.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Installation</h2>
+        
+        <h3>Option 1: Chrome Extension (Recommended)</h3>
+        <p>You can install this directly into Chrome as an unpacked extension for the best experience.</p>
+        <ol>
+            <li>Download or clone the repository.</li>
+            <li>Go to <code>chrome://extensions/</code> in your browser.</li>
+            <li>Enable "Developer mode" in the top right.</li>
+            <li>Click "Load unpacked" and select the <code>deepcut-enhancer</code> folder.</li>
+        </ol>
+
+        <h3>Option 2: Bookmarklet</h3>
+        <p>Don't want an extension? Just drag this button to your bookmarks bar, and click it whenever you're in a deepcut.live room.</p>
+        <div class="bookmarklet-container">
+            <!-- The href will be populated dynamically or users can copy a script -->
+            <a href="javascript:(function(){var d=document,s=d.createElement('script');s.src='https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/deepcut-enhancer/main/dist/deepcut-enhancer.js?t='+Date.now();d.body.appendChild(s);})();" class="button">Drag to Bookmarks: Deepcut Enhancer</a>
+            <p style="font-size: 0.85rem; color: #a0abb6; margin-top: 10px;">(Remember to update the YOUR_GITHUB_USERNAME part in the link if hosting your own!)</p>
+        </div>
+    </div>
+
+    <div class="card" id="live-data-card">
+        <h2>Live Data Showcase</h2>
+        <p>This is where we can hook into deepcut.live to show live room stats right on your page!</p>
+        <div id="live-data-content" class="live-data" style="display: block;">
+            <strong>Currently Playing (Simulated):</strong> <span id="sim-song">Daft Punk - One More Time</span><br>
+            <strong>Current DJ:</strong> <span id="sim-dj">NokaAngel</span><br>
+            <strong>Room Vibes:</strong> <span style="color: #34d399;">12 Awesome</span> / <span style="color: #ef4444;">1 Lame</span>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Placeholder for Live Data functionality
+    // Simulating a live data feed for the showcase
+    const songs = [
+        "Daft Punk - One More Time",
+        "Gorillaz - Get Cool",
+        "Kavinsky - Nightcall",
+        "Justice - D.A.N.C.E.",
+        "The Weeknd - Blinding Lights"
+    ];
+    const djs = ["NokaAngel", "DeepcutFan", "VinylMaster", "ElectroKid"];
+    
+    setInterval(() => {
+        const songEl = document.getElementById('sim-song');
+        const djEl = document.getElementById('sim-dj');
+        if(songEl && djEl && Math.random() > 0.7) {
+            songEl.textContent = songs[Math.floor(Math.random() * songs.length)];
+            djEl.textContent = djs[Math.floor(Math.random() * djs.length)];
+        }
+    }, 4000);
+</script>
+
+</body>
+</html>

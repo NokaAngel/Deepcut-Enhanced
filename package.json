@@ -1,0 +1,17 @@
+{
+  "name": "deepcut-enhancer",
+  "version": "0.3.2",
+  "private": true,
+  "description": "Chrome extension and bookmarklet enhancer for deepcut.live.",
+  "type": "module",
+  "scripts": {
+    "build:bookmarklet": "node scripts/build-bookmarklet.mjs",
+    "check": "node scripts/smoke-check.mjs"
+  },
+  "keywords": [
+    "deepcut",
+    "chrome-extension",
+    "bookmarklet"
+  ],
+  "license": "MIT"
+}
